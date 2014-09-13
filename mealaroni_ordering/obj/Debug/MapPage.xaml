@@ -1,0 +1,124 @@
+﻿<Page xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps" 
+    x:Class="mealaroni_ordering.mapPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:mealaroni_ordering"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.BottomAppBar  >
+        <CommandBar x:Name="commandBar" ClosedDisplayMode="Compact" IsOpen="True">
+            <CommandBar.PrimaryCommands>
+
+                <AppBarButton x:ConnectionId='1' Label="profile"                     >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="Images/profile.png" Height="28px"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton x:ConnectionId='2' Label="you"                                >
+                    <AppBarButton.Icon>
+                        <BitmapIcon UriSource="Images/homein.png" Height="24px"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton x:ConnectionId='3' Label="filter" Icon="Filter"                     >
+                </AppBarButton>
+                <AppBarButton x:ConnectionId='4' x:Name="dir_bnt" Label="filter" Icon="Directions"                       />
+
+
+
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Page.Resources>
+
+
+        <MenuFlyout x:Name="myMenuFlyout">
+            <MenuFlyoutItem x:ConnectionId='7'                         >Show All</MenuFlyoutItem>
+            <MenuFlyoutItem x:ConnectionId='8'                         >Show Opened</MenuFlyoutItem>
+            <MenuFlyoutItem x:ConnectionId='9'                         >Show Closed</MenuFlyoutItem>
+        </MenuFlyout>
+
+
+        <AppBarButton x:Name="goBizBnt" Icon="Forward"></AppBarButton>
+
+
+
+        <Storyboard x:Name="myStoryboardX">
+            <DoubleAnimation x:Name="wavemoveX"
+                    Storyboard.TargetName="sss"
+                    Storyboard.TargetProperty="X"
+                    To="300"
+                    />
+        </Storyboard>
+        <Storyboard x:Name="myStoryboardY">
+            <DoubleAnimation x:Name="wavemoveY"
+                    Storyboard.TargetName="sss"
+                    Storyboard.TargetProperty="Y"
+                    To="300"
+                    />
+        </Storyboard>
+
+
+        <Storyboard x:ConnectionId='5' x:Name="gridHandleStroyBoardX"                              >
+            <DoubleAnimation x:Name="gridHandelX"                             
+                    Storyboard.TargetName="gridHandle"
+                    Storyboard.TargetProperty="X"
+                    />
+        </Storyboard>
+        <Storyboard x:ConnectionId='6' x:Name="gridHandleStroyBoardY"                              >
+            <DoubleAnimation x:Name="gridHandelY"
+                    Storyboard.TargetName="gridHandle"
+                    Storyboard.TargetProperty="Y"
+                    />
+        </Storyboard>
+
+    </Page.Resources>
+
+
+
+
+
+
+
+    <Grid x:Name="mapgrid"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Maps:MapControl x:ConnectionId='10'  Grid.Column="0" Grid.Row="1" x:Name="mapcontrol"                                  >
+
+            <Grid Width="360" Margin="10,10,0,0" Canvas.ZIndex="1" Background="#B2FFFFFF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="290"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:ConnectionId='11' Grid.Column="0"  x:Name="infoPanel" Width="290"                           >
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                </StackPanel>
+                <StackPanel Grid.Column="1" x:Name="infoPanel_Side"/>
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="gridHandle"  X="0" Y="-100"/>
+                </Grid.RenderTransform>
+            </Grid>
+
+            <Ellipse x:Name="wavepoint" Width="50" Height="50" Fill="Yellow" Opacity="0.4"  Stroke="Black" StrokeThickness="3">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform x:Name="sss" X="-50" Y="-50" />
+
+                </Ellipse.RenderTransform>
+            </Ellipse>
+
+        </Maps:MapControl>
+    </Grid>
+</Page>
+

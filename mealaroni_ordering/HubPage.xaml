@@ -1,0 +1,95 @@
+﻿<Page
+    x:Class="mealaroni_ordering.HubPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:mealaroni_ordering"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:mealaroni_ordering.Data" >
+
+    <Page.BottomAppBar  >
+        <CommandBar x:Name="commandBar" ClosedDisplayMode="Compact" IsOpen="True">
+            <CommandBar.PrimaryCommands>
+
+                <AppBarButton Label="profile" Click="load_profile">
+                    <AppBarButton.Icon>
+                        <BitmapIcon  UriSource="Images/profile.png" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Label="map" Icon="Map" Click="loadMap_Click"/>
+
+                <AppBarButton Label="search" Icon="Find" Click="find_Click"/>
+
+
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Page.Resources>
+
+        <DataTemplate x:Key="HubSectionHeaderTemplate">
+            <TextBlock TextTrimming="CharacterEllipsis" FontSize="35" Style="{StaticResource HeaderTextBlockStyle}" Margin="0,0,0,0" Text="{Binding}"/>
+        </DataTemplate>
+
+        <!-- Grid-appropriate item template as seen in section 2 -->
+        <DataTemplate x:Key="BizItemsList">
+            <ListView  ItemsSource="{Binding}"
+                       IsItemClickEnabled="True"
+                       ItemClick="GroupItem_ItemClick"
+                       Margin="0,0,9.5,9.5" 
+                       Background="Transparent" >                                                                
+                
+                <StackPanel x:Name="bizStack"  Margin="0,0,0,0" Orientation="Vertical">
+                    <TextBlock TextTrimming="CharacterEllipsis" x:Name="templateTitle1" Text="..." VerticalAlignment="Bottom" Margin="9.5,0,0,6.5" FontSize="30"/>
+                    <TextBlock TextWrapping="Wrap" x:Name="templateTitle2" Text="..." VerticalAlignment="Bottom" Margin="9.5,0,0,6.5" FontSize="20"/>
+                    <TextBlock x:Name="templateTitle3" Text="..." VerticalAlignment="Bottom" Margin="9.5,0,0,6.5"  FontSize="20"/>
+                </StackPanel>
+                
+            </ListView>
+        </DataTemplate>
+
+    </Page.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Hub x:Name="Hub" >
+            <Hub.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock  Text="mealaroni" FontSize="30" Margin="0,27,0,0" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                </DataTemplate>
+            </Hub.HeaderTemplate>
+
+            <HubSection x:Name="bizList" Header="City" HeaderTemplate="{StaticResource HubSectionHeaderTemplate}" Width="352">
+                <DataTemplate>
+                    <ListView 
+                        x:Name="bizListing"
+                        ItemsSource="{Binding}"
+                        IsItemClickEnabled="True"
+                        ItemClick="GroupSection_ItemClick"
+                        ItemTemplate="{StaticResource BizItemsList}"
+                        ContainerContentChanging="ListView_ContainerContentChanging"
+                        ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    </ListView>
+                </DataTemplate>
+            </HubSection>
+
+
+            <HubSection x:Name="picker_panel_loc" Header="Pick Your City" HeaderTemplate="{StaticResource HubSectionHeaderTemplate}" Width="352">
+                <DataTemplate>
+                    <ListView x:Name="pickerLayout" Margin="25, 0, 0, 0"
+                              ContainerContentChanging="init_picker"
+                              IsItemClickEnabled="False"
+                              ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+
+                        <StackPanel Width="300">
+                            <ComboBox x:Name="comb_countries"/>
+                            <ComboBox x:Name="comb_states" SelectionChanged="comb_states_SelectionChanged" />
+                            <ComboBox x:Name="comb_cities" SelectionChanged="comb_city_SelectionChanged"/>                                                        
+                        </StackPanel>
+
+                    </ListView>
+                </DataTemplate>
+            </HubSection>
+
+        </Hub>
+    </Grid>
+</Page>
